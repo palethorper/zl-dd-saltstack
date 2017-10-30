@@ -13,6 +13,7 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "ubuntu/trusty64"
+  # config.ssh.username = "vagrant"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -68,21 +69,59 @@ Vagrant.configure("2") do |config|
   #   apt-get install -y apache2
   # SHELL
   config.vm.define :master do |vm_config|
-    # vm_config.vm.box = "opscode-ubuntu-14.04-db"
-    # vm_config.vm.box = "ubuntu-1404-ms"
-    # vm_config.vm.box = "ubuntu1604"
+    vm_config.vm.hostname = "master.ms.local"
+
     vm_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", 1256]
-      vb.gui = true
+      vb.customize ["modifyvm", :id, "--memory", 256]
+      # vb.gui = true
     end
 
-    # dirs.each do |host, guest|
-    #     vm_config.vm.synced_folder host, guest
-    # end if defined?(dirs)
+    vm_config.vm.network "private_network", ip: "33.33.32.201"
 
+    # Provisioner Configuration
     vm_config.vm.provision :shell, :inline => "sudo apt-get update -y"
-    # vm_config.vm.provision :shell, :inline => "sudo apt-get install -y git zsh"
-    # vm_config.vm.provision :shell, :inline => "sudo chsh -s `which zsh` vagrant"
+    vm_config.vm.provision :shell, :inline => "sudo apt-get install -y git vim"
+    vm_config.vm.provision :shell, :inline => "sudo curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com && sudo sh bootstrap-salt.sh"
+    vm_config.vm.provision :shell, :inline => "sudo apt-get install -y salt-master"
+
   end
+
+
+  config.vm.define :minion_1 do |vm_config|
+    config.vm.box = "ubuntu/xenial64"
+    vm_config.vm.hostname = "minion-1.ms.local"
+
+    vm_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", 256]
+      # vb.gui = true
+    end
+
+    vm_config.vm.network "private_network", ip: "33.33.32.202"
+
+    # Provisioner Configuration
+    # vm_config.vm.provision :shell, :inline => "sudo apt-get update -y"
+    # vm_config.vm.provision :shell, :inline => "sudo curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com && sudo sh bootstrap-salt.sh"
+    # vm_config.vm.provision :shell, :inline => "sudo apt-get install -y git zsh"
+
+  end
+
+  config.vm.define :minion_2 do |vm_config|
+    # config.vm.box = "ubuntu/xenial64"
+    vm_config.vm.hostname = "minion-2.ms.local"
+
+    vm_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", 256]
+      # vb.gui = true
+    end
+
+    vm_config.vm.network "private_network", ip: "33.33.32.203"
+
+    # Provisioner Configuration
+    # vm_config.vm.provision :shell, :inline => "sudo apt-get update -y"
+    # vm_config.vm.provision :shell, :inline => "sudo curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com && sudo sh bootstrap-salt.sh"
+    # vm_config.vm.provision :shell, :inline => "sudo apt-get install -y git zsh"
+
+  end
+
 
 end
