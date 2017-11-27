@@ -46,6 +46,7 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
+  #config.vm.synced_folder ".", "/srv", id: "srv", :nfs => true, :mount_options => ['nolock,vers=3,udp,actimeo=1']
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
