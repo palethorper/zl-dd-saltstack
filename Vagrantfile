@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
     vm_config.vm.provision :shell, :inline => "sudo apt-get update -y"
     vm_config.vm.provision :shell, :inline => "sudo apt-get install -y git vim"
     vm_config.vm.provision :shell, :inline => "sudo curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com && sudo sh bootstrap-salt.sh"
-    vm_config.vm.provision :shell, :inline => "sudo apt-get install -y salt-master"
+    # vm_config.vm.provision :shell, :inline => "sudo apt-get install -y salt-master"
 
   end
 
@@ -94,7 +94,11 @@ Vagrant.configure("2") do |config|
     vm_config.vm.hostname = "minion-1.ms.local"
 
     vm_config.vm.provider :virtualbox do |vb|
+<<<<<<< HEAD
       vb.customize ["modifyvm", :id, "--memory", 512]
+=======
+      vb.customize ["modifyvm", :id, "--memory", 1024]
+>>>>>>> f0a4a71c5184d0e37587edc21875a6f02ca64f59
       # vb.gui = true
     end
 
@@ -112,7 +116,11 @@ Vagrant.configure("2") do |config|
     vm_config.vm.hostname = "minion-2.ms.local"
 
     vm_config.vm.provider :virtualbox do |vb|
+<<<<<<< HEAD
       vb.customize ["modifyvm", :id, "--memory", 512]
+=======
+      vb.customize ["modifyvm", :id, "--memory", 1024]
+>>>>>>> f0a4a71c5184d0e37587edc21875a6f02ca64f59
       # vb.gui = true
     end
 
